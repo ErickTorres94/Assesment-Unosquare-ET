@@ -1,0 +1,31 @@
+<h2>Todo List</h2>
+
+<form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+  <label for="title">Task Title:</label>
+  <input id="title" formControlName="title" type="text" placeholder="Enter task title">
+  <div *ngIf="todoForm.get('title')?.invalid && todoForm.get('title')?.touched">
+    Title is required.
+  </div>
+
+  <label>
+    <input type="checkbox" formControlName="isDone">
+    Is Done?
+  </label>
+
+  <button type="submit" [disabled]="todoForm.invalid">
+    {{ todoForm.value.id ? 'Update Task' : 'Add Task' }}
+  </button>
+</form>
+
+<ul>
+  <li *ngFor="let task of tasks">
+    <span [class.completed]="task.isDone">{{ task.title }}</span>
+    <button (click)="editTask(task)">Edit</button>
+    <button (click)="deleteTask(task.id)">Delete</button>
+  </li>
+</ul>
+
+<br>
+<button type="button" (click)="logout()">
+    logout
+  </button>
